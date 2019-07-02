@@ -1,0 +1,14 @@
+n=0:100;
+x=cos(0.48*pi*n)+cos(0.52*pi*n);
+k=0:100;
+N=length(k);
+w=(2*pi/N)*k;
+X=x*exp(-1i*2*pi/N).^(n'*k);
+magX=abs(X);
+subplot(121);
+plot(w/pi,magX);grid on;
+title('x(k)');
+X1=fft(x,N);
+subplot(122);
+stem(w/pi,magX,'fill');grid on;
+title('0 <= n <= 100');

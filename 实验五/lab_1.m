@@ -1,0 +1,25 @@
+a=[1,5,6];
+b=[1,0];
+sys=tf(b,a);
+td=0.01;
+t=0:td:10;
+y1=impulse(sys,t);
+y2=step(sys,t);
+subplot(221);
+plot(t,y1);
+grid on;
+xlabel('t(sec)');
+title('³å¼¤ÏìÓ¦');
+subplot(222);
+plot(t,y2);
+grid on;
+xlabel('t(sec)');
+title('½×Ô¾ÏìÓ¦');
+f=0.5*exp(-2*t);
+y3=lsim(sys,f,t);
+subplot(223);
+plot(t,y3);
+grid on;
+xlabel('t(sec)');
+title('Áã×´Ì¬ÏìÓ¦');
+

@@ -1,0 +1,27 @@
+fs=100;T=1/fs;
+wp1=10/fs*2*pi;wp2=35/fs*2*pi;
+ws1=15/fs*2*pi;ws2=30/fs*2*pi;
+rp=3;rs=30;
+omegap1=(2/T)*tan(wp1/2);omegap2=(2/T)*tan(wp2/2);
+omegas1=(2/T)*tan(ws1/2);omegas2=(2/T)*tan(ws2/2);
+omegap=[omegap1 omegap2];
+omegas=[omegas1 omegas2];
+bw=omegap2-omegap1;omega0=sqrt(omegap1*omegap2);
+[N,Wn]=cheb1ord(omegap,omegas,rp,rs,'s');
+[z0,p0,k0]=cheb1ap(N,rp);
+b1=k0*real(poly(z0));
+a1=real(poly(p0));
+[b,a]=lp2bs(b1,a1,omega0,bw);
+[h,omega]=freqs(b,a);
+dbh=20*log10(abs(h)/max(abs(h)));
+[bz1,az1]=bilinear(b,a,fs);
+[h1,w]=freqz(bz1,az1,256);
+dbh1=20*log10(abs(h1)/max(abs(h1)));
+subplot(221);
+plot(omega,dbh);grid
+axis([0 500 -200 10]);
+title('Ä£ÄâÂË²¨Æ÷µÄ·ùÆµÏìÓ¦');ylabel('dB');
+subplot(222);
+plot(w/pi,dbh1);grid on;
+axis([0 1 -250 10]);
+title('Êı×ÖÂË²¨Æ÷µÄ·ùÆµÏìÓ¦');
